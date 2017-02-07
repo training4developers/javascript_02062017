@@ -1,17 +1,54 @@
-//import * as utils from './utils';
-import { logger as myLogger, sqr as mySqr } from './utils';
-//import utils from './utils';
+// class Person {
 
-import _, { extend } from 'lodash';
+//     constructor(firstName, lastName) {
+//         this.firstName = firstName;
+//         this.lastName = lastName;
+//     }
 
-myLogger('hi class!');
-console.log(mySqr(67));
+//     getFullName() {
+//         return `${this.firstName} ${this.lastName}`;
+//     }
 
-const src = { id : 2 };
-const dest = {};
+// }
 
-_.extend(dest, src);
-extend(dest, src);
-console.log(dest);
+// class Student extends Person {
 
-//utils['uppercase']
+//     constructor(studentId, firstName, lastName) {
+//         super(firstName, lastName);
+//         this.studentId = studentId;
+//     }
+
+//     getRecordInfo() {
+//         return this.studentId + ' ' + this.lastName + ', ' + this.firstName;
+//     }
+
+// }
+
+function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+}
+
+Person.prototype.getFullName = function() {
+    return this.firstName + ' ' + this.lastName;
+};
+
+function Student(studentId, firstName, lastName) {
+    this._super.call(this, firstName, lastName);
+    this.studentId = studentId;
+}
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+Student.prototype._super = Person;
+
+Student.prototype.getRecordInfo = function() {
+    return this.studentId + ' ' + this.lastName + ', ' + this.firstName;
+};
+
+
+const s = new Student(1, 'Bob', 'Smith');
+console.log(s.getRecordInfo());
+console.log(s.getFullName());
+
+
