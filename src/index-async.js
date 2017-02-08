@@ -1,3 +1,4 @@
+
 function wait() {
     return new Promise(resolve => setTimeout(() => resolve('a'), 2000));
 }
@@ -5,8 +6,17 @@ function wait() {
 
 async function doIt() {
     console.log('started');
-    await wait();
+    //throw Error('test');
+    let result = await wait();
+    console.log(result);
     console.log('done');
 }
 
-doIt();
+try {
+
+    doIt();
+    console.log('all done');
+
+} catch(err) {
+    console.log('caught the error');
+}
